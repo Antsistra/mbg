@@ -49,12 +49,15 @@ import {
   Loader2,
   Calendar,
   Users,
+  Send,
+  FileEdit,
+  Archive,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import { getMenus, deleteMenu } from "@/services/menuService";
-import type { Menu } from "@/types/database";
+import { getMenus, deleteMenu, updateMenu } from "@/services/menuService";
+import type { Menu, MenuStatus } from "@/types/database";
 import {
   MEAL_TYPE_LABELS,
   TARGET_AUDIENCE_LABELS,
@@ -69,6 +72,7 @@ export default function DaftarMenu() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [menuToDelete, setMenuToDelete] = useState<Menu | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadMenus() {
@@ -86,6 +90,18 @@ export default function DaftarMenu() {
     }
     loadMenus();
   }, [user]);
+
+  const handleUpdateStatus = async (menuId: string, newStatus: MenuStatus) => {
+    setIsUpdatingStatus(menuId);
+    try {
+      const updatedMenu = await updateMenu(menuId, { status: newStatus });
+      setMenus((prev) => prev.map((m) => (m.id === menuId ? updatedMenu : m)));
+    } catch (error) {
+      console.error("Failed to update menu status:", error);
+    } finally {
+      setIsUpdatingStatus(null);
+    }
+  };
 
   const handleDelete = async () => {
     if (!menuToDelete) return;
@@ -246,6 +262,58 @@ export default function DaftarMenu() {
                             <Pencil className="mr-2 h-4 w-4" />
                             Edit
                           </DropdownMenuItem>
+                          {menu.status === "draft" && (
+                            <DropdownMenuItem
+                              onClick={() =>
+                                handleUpdateStatus(menu.id, "published")
+                              }
+                              disabled={isUpdatingStatus === menu.id}
+                            >
+                              <Send className="mr-2 h-4 w-4" />
+                              {isUpdatingStatus === menu.id
+                                ? "Memproses..."
+                                : "Publish"}
+                            </DropdownMenuItem>
+                          )}
+                          {menu.status === "published" && (
+                            <DropdownMenuItem
+                              onClick={() =>
+                                handleUpdateStatus(menu.id, "draft")
+                              }
+                              disabled={isUpdatingStatus === menu.id}
+                            >
+                              <FileEdit className="mr-2 h-4 w-4" />
+                              {isUpdatingStatus === menu.id
+                                ? "Memproses..."
+                                : "Kembalikan ke Draft"}
+                            </DropdownMenuItem>
+                          )}
+                          {menu.status !== "archived" && (
+                            <DropdownMenuItem
+                              onClick={() =>
+                                handleUpdateStatus(menu.id, "archived")
+                              }
+                              disabled={isUpdatingStatus === menu.id}
+                            >
+                              <Archive className="mr-2 h-4 w-4" />
+                              {isUpdatingStatus === menu.id
+                                ? "Memproses..."
+                                : "Arsipkan"}
+                            </DropdownMenuItem>
+                          )}
+                          {menu.status === "archived" && (
+                            <DropdownMenuItem
+                              onClick={() =>
+                                handleUpdateStatus(menu.id, "draft")
+                              }
+                              disabled={isUpdatingStatus === menu.id}
+                            >
+                              <FileEdit className="mr-2 h-4 w-4" />
+                              {isUpdatingStatus === menu.id
+                                ? "Memproses..."
+                                : "Kembalikan ke Draft"}
+                            </DropdownMenuItem>
+                          )}
                           <DropdownMenuItem>
                             <Copy className="mr-2 h-4 w-4" />
                             Duplikat
