@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  Apple,
-  ChartPie,
-  FileText,
-  LayoutDashboard,
-  Settings2,
-  UtensilsCrossed,
-} from "lucide-react";
+import { Apple, ChartPie, Settings2, UtensilsCrossed } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { NavMain } from "@/components/nav-main";
@@ -26,12 +19,6 @@ import {
 const data = {
   navMain: [
     {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: LayoutDashboard,
-      isActive: true,
-    },
-    {
       title: "Clustering",
       url: "#",
       icon: ChartPie,
@@ -39,14 +26,6 @@ const data = {
         {
           title: "Visualisasi",
           url: "/clustering/visualisasi",
-        },
-        {
-          title: "Upload Data",
-          url: "/clustering/upload",
-        },
-        {
-          title: "Daftar Hasil",
-          url: "/clustering/hasil",
         },
       ],
     },
@@ -84,25 +63,15 @@ const data = {
         },
       ],
     },
-    {
-      title: "Laporan",
-      url: "#",
-      icon: FileText,
-      items: [
-        {
-          title: "Export Data",
-          url: "/laporan/export",
-        },
-      ],
-    },
+
     {
       title: "Pengaturan",
       url: "#",
       icon: Settings2,
       items: [
         {
-          title: "Profil",
-          url: "/pengaturan/profil",
+          title: "Standar Gizi",
+          url: "/pengaturan/standar-gizi",
         },
         {
           title: "Preferensi",

@@ -2,7 +2,6 @@ import { supabase } from "@/lib/supabase";
 import type {
   FoodItem,
   Menu,
-  MenuItem,
   MenuWithItems,
   NutritionStandard,
   CreateMenuInput,
@@ -244,4 +243,52 @@ export async function getAllNutritionStandards() {
 
   if (error) throw error;
   return data as NutritionStandard[];
+}
+
+export async function updateNutritionStandard(
+  id: number,
+  updates: {
+    min_calories?: number;
+    max_calories?: number;
+    min_proteins?: number;
+    max_proteins?: number;
+    min_fat?: number;
+    max_fat?: number;
+    min_carbohydrate?: number;
+    max_carbohydrate?: number;
+    description?: string;
+  }
+) {
+  const { data, error } = await supabase
+    .from("nutrition_standards")
+    .update(updates)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as NutritionStandard;
+}
+
+export async function createNutritionStandard(input: {
+  target_audience: TargetAudience;
+  meal_type: MealType;
+  min_calories: number;
+  max_calories: number;
+  min_proteins: number;
+  max_proteins: number;
+  min_fat: number;
+  max_fat: number;
+  min_carbohydrate: number;
+  max_carbohydrate: number;
+  description?: string;
+}) {
+  const { data, error } = await supabase
+    .from("nutrition_standards")
+    .insert(input)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as NutritionStandard;
 }

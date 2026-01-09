@@ -71,7 +71,7 @@ export interface NutritionStandard {
 }
 
 export type MealType = "sarapan" | "makan_siang" | "makan_malam" | "snack";
-export type TargetAudience = "sd" | "smp" | "sma" | "umum";
+export type TargetAudience = "sd" | "smp" | "sma";
 export type MenuStatus = "draft" | "published" | "archived";
 
 export const MEAL_TYPE_LABELS: Record<MealType, string> = {
@@ -85,7 +85,6 @@ export const TARGET_AUDIENCE_LABELS: Record<TargetAudience, string> = {
   sd: "SD (7-12 tahun)",
   smp: "SMP (13-15 tahun)",
   sma: "SMA (16-18 tahun)",
-  umum: "Umum",
 };
 
 export const MENU_STATUS_LABELS: Record<MenuStatus, string> = {

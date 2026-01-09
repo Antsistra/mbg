@@ -27,7 +27,6 @@ import {
   ChartNoAxesCombined,
   UtensilsCrossed,
   Upload,
-  Scale,
 } from "lucide-react";
 import {
   PieChart,
@@ -374,10 +373,10 @@ export default function Dashboard() {
             </Card>
           </div>
 
-          {/* Charts Row - Pie Chart left, Top 5 right */}
+          {/* Charts Row - Pie Chart */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
             {/* Pie Chart - Distribusi Keamanan */}
-            <Card className="lg:col-span-3">
+            <Card className="lg:col-span-7">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <ChartPie className="h-5 w-5" />
@@ -425,44 +424,6 @@ export default function Dashboard() {
                       <span className="text-sm text-muted-foreground">
                         {item.name} ({item.value})
                       </span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Top 5 Balanced Foods */}
-            <Card className="lg:col-span-4">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Scale className="h-5 w-5" />
-                  Top 5 Bahan Pangan Seimbang
-                </CardTitle>
-                <CardDescription>
-                  Bahan dengan komposisi nutrisi paling seimbang untuk MBG
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {stats.balancedFoods.map((item, index) => (
-                    <div key={index} className="flex items-center">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
-                        {index + 1}
-                      </div>
-                      <div className="ml-4 flex-1 space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                          {String(item.name)}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          Kal: {Number(item.calories).toFixed(2)} | Pro:{" "}
-                          {Number(item.proteins).toFixed(2)} | Lem:{" "}
-                          {Number(item.fat).toFixed(2)} | Karb:{" "}
-                          {Number(item.carbohydrate).toFixed(2)}
-                        </p>
-                      </div>
-                      <div className="rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-700">
-                        Skor: {item.balanceScore.toFixed(2)}
-                      </div>
                     </div>
                   ))}
                 </div>

@@ -352,13 +352,6 @@ export default function DaftarBahan() {
   }, [searchQuery, clusterFilter, itemsPerPage]);
 
   // Statistics
-  const stats = useMemo(() => {
-    return {
-      total: foodItems.length,
-      safe: foodItems.filter((i) => i.cluster === "cluster_0").length,
-      unsafe: foodItems.filter((i) => i.cluster === "Noise").length,
-    };
-  }, [foodItems]);
 
   const handleViewDetail = (item: FoodItem) => {
     setSelectedItem(item);

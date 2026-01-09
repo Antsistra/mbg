@@ -30,7 +30,6 @@ import {
   RotateCcw,
   Info,
   Printer,
-  FileText,
 } from "lucide-react";
 import {
   PieChart,
